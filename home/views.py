@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import requests
 import json
+from groq import Groq
 # Create your views here.
 
 def index(request):
@@ -134,7 +135,7 @@ def diet_plan(request):
         # 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
 
 
-        from groq import Groq
+        
 
         client = Groq(
             api_key="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",
@@ -145,21 +146,20 @@ def diet_plan(request):
         {
             "role": "user",
             "content": f'''Generate a short and crisp diet plan recipe based on the following parameters:
-Diet Type: {dietType} 
-Calories: {cal_tar} 
-Allergies: {allergy} 
-Meal Frequency: {mealFrequency} 
-Cuisine: {cuisine} 
-Goal: {goal} 
-Diet Notes: {dietNotes}
-Output Format:
-
-Recipe Name: [Keep it catchy and relevant]
-Ingredients: [List key ingredients with exact amounts]
-Instructions: [Short, clear steps in 3-5 points]
-Calories: [Approximate calorie count]
-Macronutrient Breakdown (Optional): [Protein, Carbs, Fats]
-Ensure the recipe is well-balanced, easy to prepare, and aligns with the user's dietary goals.''',
+            Diet Type: {dietType} 
+            Calories: {cal_tar} 
+            Allergies: {allergy} 
+            Meal Frequency: {mealFrequency} 
+            Cuisine: {cuisine} 
+            Goal: {goal}
+            Diet Notes: {dietNotes}
+            Output Format:
+            Recipe Name: [Keep it catchy and relevant]
+            Ingredients: [List key ingredients with exact amounts]
+            Instructions: [Short, clear steps in 3-5 points]
+            Calories: [Approximate calorie count]
+            Macronutrient Breakdown (Optional): [Protein, Carbs, Fats]
+            Ensure the recipe is well-balanced, easy to prepare, and aligns with the user's dietary goals.''',
         }
     ],
     model="llama-3.3-70b-versatile",
@@ -170,8 +170,43 @@ Ensure the recipe is well-balanced, easy to prepare, and aligns with the user's 
     return render(request, "diet.html")
 def recipe(request):
     if request.method == "POST":
-        pass
-    return render(request, "diet.html")
+        ingredients = request.POST.get('ingredients')
+        recipeCuisine = request.POST.get('recipeCuisine')
+        mealType = request.POST.get('mealType')
+        cookingTime = request.POST.get('cookingTime')
+        skillLevel = request.POST.get('skillLevel')
+        spiceLevel = request.POST.get('spiceLevel')
+        budget = request.POST.get('budget')
+        notes = request.POST.get('notes')
+        client = Groq(
+            api_key="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",
+        )
+
+        chat_completion = client.chat.completions.create(
+        messages=[
+        {
+            "role": "user",
+            "content": f'''Generate a short and crisp recipe based on the following parameters:
+            Ingredients: {ingredients} 
+            Recipe Cuisine: {recipeCuisine} 
+            Meal Type: {mealType} 
+            cookingTime: {cookingTime} 
+            Skill Level: {skillLevel} 
+            Spice Level: {spiceLevel}
+            BUdget : {budget}
+            Notes: {notes}
+            Output Format:
+            Recipe Name: [Keep it catchy and relevant]
+            Ingredients: [List key ingredients with exact amounts]
+            Instructions: [Short, clear steps in 3-5 points]
+            Calories: [Approximate calorie count]
+            Ensure the recipe is well-balanced, easy to prepare, and aligns with the user's dietary goals.''',
+            }
+        ],
+        model="llama-3.3-70b-versatile",)
+        reply_text = chat_completion.choices[0].message.content
+
+    return render(request, "diet.html", context={"recipe_reply": reply_text.strip("\n")})
 
 
 def features(request):
