@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neutrino AI Fitness Tracker</title>
+    <link rel="stylesheet" href="{% static "css/calorie.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-fitness-woman-doing-mountain-climbers-exercise-731-large.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="container">
+        <header>
+            <a href="/nutritionist/" class="back-btn">← Back</a>
+            <h1 class="title">Neutrino AI</h1>
+            <div class="spacer"></div>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <h2>Personal Details</h2>
+                <form id="fitnessForm">
+                    <div class="form-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sex">Sex</label>
+                        <select id="sex" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    
+                    <h2>Goals</h2>
+                    <div class="form-group">
+                        <label for="targetWeight">Target Weight (kg)</label>
+                        <input type="number" id="targetWeight" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fitnessGoal">Fitness Goal</label>
+                        <select id="fitnessGoal" required>
+                            <option value="weightLoss">Weight Loss</option>
+                            <option value="muscleGain">Muscle Gain</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+
+                    <h2>Daily Food Intake</h2>
+                    <div class="form-group">
+                        <label for="meals">Number of Meals</label>
+                        <input type="number" id="meals" min="1" max="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dietType">Diet Type</label>
+                        <select id="dietType" required>
+                            <option value="balanced">Balanced</option>
+                            <option value="lowCarb">Low Carb</option>
+                            <option value="highProtein">High Protein</option>
+                        </select>
+                    </div>
+
+                    <h2>Exercise Log</h2>
+                    <div class="form-group">
+                        <label for="exerciseType">Exercise Type</label>
+                        <select id="exerciseType" required>
+                            <option value="cardio">Cardio</option>
+                            <option value="strength">Strength Training</option>
+                            <option value="mixed">Mixed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exerciseDuration">Duration (minutes/day)</label>
+                        <input type="number" id="exerciseDuration" required>
+                    </div>
+
+                    <button type="submit" class="calculate-btn">Calculate Plan</button>
+                </form>
+            </section>
+
+            <section class="output-section">
+                <div class="results-card calorie-card">
+                    <h3>Daily Calorie Summary</h3>
+                    <div id="calorieCalculation">
+                        <p>Base Metabolic Rate: <span id="bmr">-</span> calories</p>
+                        <p>Daily Calorie Need: <span id="dailyCalories">-</span> calories</p>
+                        <p>Calorie Target: <span id="calorieTarget">-</span> calories</p>
+                    </div>
+                </div>
+
+                <div class="results-card exercise-card">
+                    <h3>Exercise Recommendations</h3>
+                    <div id="exerciseRecommendations"></div>
+                </div>
+
+                <div class="results-card calories-burned-card">
+                    <h3>Estimated Calories Burned</h3>
+                    <div id="caloriesBurned"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="{% static "js/calorie.js" %}"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+body{
+    background-color: black;
+    
+}
+
+#navlogoname{
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+}
+
+#navitemscolor{
+    color: rgb(255, 255, 255);
+}
+
+#navbarbg{
+    background-color: rgb(255, 255, 255);
+}
+
+#dropdownbgcolor{
+    background-color: black;
+}
+
+.video-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#botname{
+    color: white;
+    text-align: center;
+    font-weight: bolder;
+}
+#botnameslogan{
+    color: white;
+    text-align: center;
+    font-weight: 100;
+}
+
+.service {
+    width: 30%;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.services {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+#redirectofbot{
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.service:hover{
+    background-color: #313131;
+}
+

@@ -1,0 +1,42 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neutrino AI - Nutrition</title>
+    <link rel="stylesheet" href="{% static "css/nutrition.css" %}">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background: url('{% static "img/gym.webp" %}') no-repeat center center fixed;
+    background-size: cover;
+    transition: background 0.3s ease-in-out;
+}
+    </style>
+</head>
+<body>
+    <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
+    <a href="/" class="back-btn">← Back</a>
+    {% comment %} <div class="back-btn" onclick="navigate('/')">⮌</div> {% endcomment %}
+    <div class="container">
+        <div class="header">Neutrino AI</div>
+        <div class="sub-header">Being healthy should be your first priority</div>
+        <div class="content-box">
+            <div class="box" onclick="navigate('/nutritionist/calorie/')">
+                <h3>Exercise + Calorie Count</h3>
+                <p>Burn some fuel with exercise and perfect calorie count.</p>
+            </div>
+            <div class="box" onclick="navigate('/nutritionist/diet-recipe/')">
+                <h3>Diet Plan + Recipes</h3>
+                <p>Have your diet planned and recipes ready, made just for you.</p>
+            </div>
+        </div>
+    </div>
+    <script src="{% static "js/nutrition.js" %}"></script>
+</body>
+</html>

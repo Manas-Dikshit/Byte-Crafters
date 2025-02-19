@@ -1,0 +1,299 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neutrino AI Diet & Recipe Planner</title>
+    <link rel="stylesheet" href="{% static "css/diet.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-preparing-a-healthy-meal-with-vegetables-and-eggs-12771-large.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="container">
+        <header>
+            <nav>
+                <a href="#" class="nav-btn">← Back</a>
+                <a href="#" class="nav-btn">Home</a>
+            </nav>
+            <h1 class="title">Neutrino AI</h1>
+            <div class="spacer"></div>
+        </header>
+
+        <div class="motto">
+            <h2>Proper Diet is Must for Refining Your Body</h2>
+        </div>
+
+        <main>
+            <section class="input-section diet-plan">
+                <h3>Diet Plan Generator</h3>
+                <form id="dietForm" method="POST" action="/nutritionist/gen-diet/">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Budget per Day (₹)</label>
+                        <input type="number" name="budget" id="budget" placeholder="e.g., 100, 200, 500" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Diet Type</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="dietType" value="vegetarian">
+                                <span>Vegetarian</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="dietType" value="non-vegetarian">
+                                <span>Non-Vegetarian</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="dietType" value="vegan">
+                                <span>Vegan</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="dietType" value="eggetarian">
+                                <span>Eggetarian</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Calorie Target (kcal/day)</label>
+                        <input type="number" name = "cal_tar" id="calories" placeholder="e.g., 1500, 2000, 2500" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Macronutrient Preference</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="macro" value="protein">
+                                <span>Protein-Rich</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="macro" value="lowcarb">
+                                <span>Low-Carb</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="macro" value="fiber">
+                                <span>High-Fiber</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="macro" value="balanced">
+                                <span>Balanced</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Allergies / Dietary Restrictions</label>
+                        <input type="text" name="allergy" id="allergies" placeholder="e.g., lactose intolerance, nut allergy">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Meal Frequency</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="mealFrequency" value="3">
+                                <span>3 Meals/Day</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="mealFrequency" value="4">
+                                <span>4 Meals/Day</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="mealFrequency" value="5">
+                                <span>5 Meals/Day</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cuisine Preference</label>
+                        <select id="cuisine" name="cuisine">
+                            <option value="indian">Indian</option>
+                            <option value="continental">Continental</option>
+                            <option value="keto">Keto</option>
+                            <option value="mediterranean">Mediterranean</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Goal</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="goal" value="weightloss">
+                                <span>Weight Loss</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="goal" value="musclegain">
+                                <span>Muscle Gain</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="goal" value="health">
+                                <span>General Health</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="goal" value="maintenance">
+                                <span>Weight Maintenance</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Notes</label>
+                        <textarea id="dietNotes" placeholder="Specify any food preferences or dislikes"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Generate Diet Plan</button>
+                </form>
+            </section>
+
+            <section class="input-section recipe-finder">
+                <h3>Recipe Finder</h3>
+                <form id="recipeForm" method="POST", action="/nutritionist/gen-recipe/">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Available Ingredients</label>
+                        <textarea id="ingredients" placeholder="e.g., rice, chicken, tomatoes, spinach" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Cuisine</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="recipeCuisine" value="indian">
+                                <span>Indian</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="recipeCuisine" value="chinese">
+                                <span>Chinese</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="recipeCuisine" value="italian">
+                                <span>Italian</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="recipeCuisine" value="mediterranean">
+                                <span>Mediterranean</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="recipeCuisine" value="mexican">
+                                <span>Mexican</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="recipeCuisine" value="continental">
+                                <span>Continental</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="recipeCuisine" value="any">
+                                <span>Any</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Meal Type</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="mealType" value="breakfast">
+                                <span>Breakfast</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="mealType" value="lunch">
+                                <span>Lunch</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="mealType" value="dinner">
+                                <span>Dinner</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="mealType" value="snacks">
+                                <span>Snacks</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="mealType" value="dessert">
+                                <span>Dessert</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cooking Time Limit (Minutes)</label>
+                        <input type="number" id="cookingTime" placeholder="e.g., 15, 30, 60" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skill Level</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="skillLevel" value="beginner">
+                                <span>Beginner</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="skillLevel" value="intermediate">
+                                <span>Intermediate</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="skillLevel" value="expert">
+                                <span>Expert</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Spice Level</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="spiceLevel" value="mild">
+                                <span>Mild</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="spiceLevel" value="medium">
+                                <span>Medium</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="spiceLevel" value="spicy">
+                                <span>Spicy</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Budget per Meal (₹)</label>
+                        <input type="number" id="recipeBudget" placeholder="e.g., 50, 100, 200">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Notes</label>
+                        <textarea id="recipeNotes" placeholder="Specify dislikes, allergies, or special preferences"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Find Recipes</button>
+                </form>
+            </section>
+
+            <section class="output-section diet-output">
+                <div class="results-card">
+                    <h3>Your Personalized Diet Plan</h3>
+                    <div id="dietPlanOutput">
+                        {{ diet_reply }}
+                    </div>
+                </div>
+            </section>
+
+            <section class="output-section recipe-output">
+                <div class="results-card">
+                    <h3>Recommended Recipes</h3>
+                    <div id="recipeOutput">
+                        {{ recipe_reply }}
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="{% static "js/diet.js" %}"></script>
+</body>
+</html>
