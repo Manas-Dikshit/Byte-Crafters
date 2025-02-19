@@ -13,6 +13,7 @@ urlpatterns = [
     path("nutritionist/diet-recipe/", views.diet, name="diet-recipe"),
     path("nutritionist/gen-recipe/", views.recipe, name="recipe"),
     path("nutritionist/gen-diet/", views.diet_plan, name="diet_plan"),
+    path("features/", views.features, name="features"),
     # path('sem/<int:sem>', views.semester, name="semester"), slug
 ]
 urlpatterns += staticfiles_urlpatterns()

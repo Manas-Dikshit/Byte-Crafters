@@ -137,6 +137,10 @@ def recipe(request):
     if request.method == "POST":
         pass
     return render(request, "diet.html")
+
+
+def features(request):
+    return render(request, "NeutrinoFeatures.html")
 # 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
 
 
