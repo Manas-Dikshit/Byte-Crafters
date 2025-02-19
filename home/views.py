@@ -160,14 +160,14 @@ def diet_plan(request):
             Calories: [Approximate calorie count]
             Macronutrient Breakdown (Optional): [Protein, Carbs, Fats]
             Ensure the recipe is well-balanced, easy to prepare, and aligns with the user's dietary goals.''',
-        }
-    ],
-    model="llama-3.3-70b-versatile",
-)
+            }
+        ],
+        model="llama-3.3-70b-versatile",)
         reply_text = chat_completion.choices[0].message.content
         print(reply_text)
         return render(request, "diet.html", context={"diet_reply": reply_text.strip("\n")})
     return render(request, "diet.html")
+
 def recipe(request):
     if request.method == "POST":
         ingredients = request.POST.get('ingredients')
@@ -206,7 +206,9 @@ def recipe(request):
         model="llama-3.3-70b-versatile",)
         reply_text = chat_completion.choices[0].message.content
 
-    return render(request, "diet.html", context={"recipe_reply": reply_text.strip("\n")})
+        return render(request, "diet.html", context={"recipe_reply": reply_text.strip("\n")})
+    else:
+        return render(request, "diet.html")
 
 
 def features(request):
