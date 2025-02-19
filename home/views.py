@@ -122,7 +122,7 @@ def diet_plan(request):
             "messages": [
             {
                 "role": "user",
-                "content": f"Generate a short and krisp personalized diet plan based on: Budget: {budget} Diet Type: {dietType} Calories: {cal_tar} Allergies: {allergy} Macro Nutrients: {macro} Meal Frequency: {mealFrequency} Cuisine: {cuisine} Goal: {goal} Diet Notes: {dietNotes}. Include quick meal options with portion sizes and key ingredients."
+                "content": f"Generate a short and crisp personalized diet plan based on: Diet Type: {dietType} Calories: {cal_tar} Allergies: {allergy} Meal Frequency: {mealFrequency} Cuisine: {cuisine} Goal: {goal} Diet Notes: {dietNotes}. Include quick meal options with portion sizes and key ingredients."
             }
             ],
             
