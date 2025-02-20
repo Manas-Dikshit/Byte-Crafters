@@ -12,7 +12,6 @@ def index(request):
 
 def mentalHealth(request):
     if request.method == 'POST':
-       
         print(request.POST)
         message = request.POST.get('message')
         print(message)
@@ -31,43 +30,20 @@ def chatbot(request):
         user_message = data.get("message", "").lower()
         print(user_message)
 
-        response = requests.post(
-        url="https://openrouter.ai/api/v1/chat/completions",
-        headers={
-            "Authorization": "Bearer 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",
-            "Content-Type": "application/json",
-        },
-        data=json.dumps({
-            "model": "meta-llama/llama-3.3-70b-instruct:free",
-            "messages": [
-            {
-                "role": "user",
-                "content": f"You are Neutrino, a friendly and supportive mental health chatbot created by BytesCraft, a team of 1st Year students from SUIIT, Burla. Your role is to respond only to mental health-related queries in a short, crisp, and encouraging manner. You do not answer unrelated questions. Your tone should be warm, empathetic, and positive. User's Message : {user_message}."
-            }
-            ],
-            
-        })
+        client = Groq(
+            api_key="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",
         )
-        while(json.dumps(response.json()['choices'][0]['message']['content'], indent=0) == '""'):
-            response = requests.post(
-        url="https://openrouter.ai/api/v1/chat/completions",
-        headers={
-            "Authorization": "Bearer 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",
-            "Content-Type": "application/json",
-        },
-        data=json.dumps({
-            "model": "meta-llama/llama-3.3-70b-instruct:free",
-            "messages": [
-            {
-                "role": "user",
-                "content": f"You are Neutrino, a friendly and supportive mental health chatbot. Your role is to respond only to mental health-related queries in a short, crisp, and encouraging manner. You do not answer unrelated questions. Your tone should be warm, empathetic, and positive. User's Message : {user_message}."
+
+        chat_completion = client.chat.completions.create(
+        messages=[
+        {
+            "role": "user",
+            "content": f"You are Neutrino, a friendly and supportive mental health chatbot created by BytesCraft, a team of 1st Year students from SUIIT, Burla. Your role is to respond only to mental health-related queries in a short, crisp, and encouraging manner. You do not answer unrelated questions. Your tone should be warm, empathetic, and positive. User's Message : {user_message}.",
             }
-            ],
-            
-        })
-        )
-        reply_text =  str(json.dumps(response.json()['choices'][0]['message']['content'], indent=0)).strip('"').strip('\n')
-        print(json.dumps(response.json()['choices'][0]['message']['content'], indent=0))
+        ],
+        model="llama-3.3-70b-versatile",)
+        reply_text = chat_completion.choices[0].message.content
+
         return JsonResponse({"reply" : reply_text})
 
 
@@ -92,50 +68,6 @@ def diet_plan(request):
         cuisine = request.POST.get('cuisine')
         goal = request.POST.get('goal')
         dietNotes = request.POST.get('dietNotes')
-
-
-        # response = requests.post(
-        # url="https://openrouter.ai/api/v1/chat/completions",
-        # headers={
-        #     "Authorization": "Bearer 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",
-        #     "Content-Type": "application/json",
-        # },
-        # data=json.dumps({
-        #     "model": "meta-llama/llama-3.3-70b-instruct:free",
-        #     "messages": [
-        #     {
-        #         "role": "user",
-        #         "content": f""
-        #     }
-        #     ],
-            
-        # })
-        # )
-        # while(json.dumps(response.json()['choices'][0]['message']['content'], indent=0) == '""'):
-        #     response = requests.post(
-        # url="https://openrouter.ai/api/v1/chat/completions",
-        # headers={
-        #     "Authorization": "Bearer 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",
-        #     "Content-Type": "application/json",
-        # },
-        # data=json.dumps({
-        #     "model": "meta-llama/llama-3.3-70b-instruct:free",
-        #     "messages": [
-        #     {
-        #         "role": "user",
-        #         "content": f"Generate a short and crisp personalized diet plan based on: Diet Type: {dietType} Calories: {cal_tar} Allergies: {allergy} Meal Frequency: {mealFrequency} Cuisine: {cuisine} Goal: {goal} Diet Notes: {dietNotes}. Include quick meal options with portion sizes and key ingredients."
-        #     }
-        #     ],
-            
-        # })
-        # )
-        # reply_text =  str(json.dumps(response.json()['choices'][0]['message']['content'], indent=0)).strip('"')
-
-
-        # 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
-
-
-        
 
         client = Groq(
             api_key="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",
@@ -213,7 +145,6 @@ def recipe(request):
 
 def features(request):
     return render(request, "NeutrinoFeatures.html")
-# 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
 
 
 
